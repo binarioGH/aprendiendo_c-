@@ -6,7 +6,7 @@ int main(){
 	int vida = 100, evida = 100, rnd, rnd2;
 	srand(time(NULL));
 	
-	while(vida >= 0 || evida >= 0){
+	while(vida > 0 && evida > 0){
 		rnd = 1+rand()%(11-1);
 		cout<<vida<<"  "<<evida<<endl;
 		rnd2 = 1+rand()%(3-1);
