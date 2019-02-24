@@ -14,17 +14,21 @@ int main(){
 	do{
 		cout<<"Ingresa el numero de preguntas (maximo 100): ";
 		cin>>nQuestions;
+		fflush(stdin);
 	}while(nQuestions>100);
 
 	for(i;i<nQuestions;i++){
 		cout<<"Ingresa tu pregunta: ";
 		getline(cin, questions[i].q);
+		fflush(stdin);
 		for(e=0;e<4;e++){
 			cout<<"Ingresa una opcion respuesta: ";
 			getline(cin, questions[i].answ[e]);
-			cout<<"Ingrese el numero de la respuesta correcta";
+			fflush(stdin);	
 			cin>>questions[i].resp;
-			}
+			fflush(stdin);
+		}
+		cout<<"Ingrese el numero de la respuesta correcta";
 	}
 	for(i=0;i<nQuestions;i++){
 		ask(questions[i].q, questions[i].answ, questions[i].resp);
