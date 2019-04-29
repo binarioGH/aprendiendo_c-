@@ -1,26 +1,28 @@
 #pragma comment(lib, "ws2_32.lib")
-#include <winsock2.h>
 #include <iostream>
+#include <winsock2.h>
 using namespace std;
-
-void startIpv4Socket(SOCKADDR_IN *sock, char* ip, int port);
 
 int main(){
 	WSAData wsadata;
-	if(WSAStartup(MAKEWORD(2,1), &wsadata)){
-		cout<<"There was a problem starting Winsock2."<<endl;
+	if(WSAStartup(MAKEWORD(2,1), &wsadata) != 0){
+		cout<<"Error: socket miss started"<<endl;
+		exit(0);
 	}
 	SOCKADDR_IN addr;
-	int addrlen = sizeof(addr);
-	startIpv4Socket(&addr, "127.0.0.1", 5000);
-	cout<<addr.sin_addr.s_addr<<endl;
-	cout<<addr.sin_port<<endl;
+	int addrl = sizeof(addr);
+	addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+	addr.sin_port = htons(5000);
+	addr.sin_family = AF_INET;
+	SOCKET sock = socket(AF_INET, SOCK_STREAM, 0);
+	bind(sock, (SOCKADDR*)&addr, sizeof(addr));
+	listen(sock, SOMAXCONN);
+	SOCKET conn;
+	conn = accept(sock, (SOCKADDR*)&addr, &addrl);
+	if(conn == 0){
+		cout<<"Failed to accept connection."<<endl;
+		exit(0);
+	}
+	cout<<"Client connected!"<<endl;
 	return 0;
-}
-
-void startIpv4Socket(SOCKADDR_IN *sock, char* ip, int port){
-	sock->sin_addr.s_addr = inet_addr(ip);
-	sock->sin_port = htons(port);
-	sock->sin_family = AF_INET;
-	return;
 }
