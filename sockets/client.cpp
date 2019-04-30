@@ -20,5 +20,8 @@ int main(){
 		exit(0);
 	}
 	cout<<"connected!"<<endl;
+	char msj[255];
+	recv(sock, msj, sizeof(msj), 0);
+	cout<<"Server: "<<msj<<endl;
 	return 0;
 }
