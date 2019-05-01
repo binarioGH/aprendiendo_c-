@@ -22,8 +22,7 @@ int main(){
 	}
 	cout<<"Starting chat."<<endl;
 	char rcv[255];
-	while(rcv != "exit"){
-		cout<<recv(sock, rcv, sizeof(rcv),0)<<endl;
+	while(rcv != "exit" && recv(sock, rcv, sizeof(rcv),0) != -1){		cout<<rcv<<endl;
 	}
 	return 0;
 }

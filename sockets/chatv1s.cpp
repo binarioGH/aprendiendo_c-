@@ -28,7 +28,7 @@ int main(int nArgs, char* argv[]){
 	char msj[255];
 	while(msj != "exit"){
 		cout<<"<->";
-		cin.getline(msj, sizeof(msj));
+		cin.getline(msj, 255);
 		send(conn, msj, sizeof(msj), 0);
 	}
 	return 0;
