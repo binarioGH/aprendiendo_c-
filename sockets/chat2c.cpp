@@ -1,5 +1,6 @@
 #pragma comment(lib, "ws32_lib")
 #include <iostream>
+#include <string>
 #include <winsock2.h>
 using namespace std;
 
@@ -19,14 +20,22 @@ int main(){
 		cout<<"Error while connecting to the server.";
 		exit(1);
 	}
+	string getMsj;
 	char msj[255];
 	char rcv[255];
-	while(msj != "exit" && recv(sock, rcv,sizeof(rcv), 0) != -1){
+	while(getMsj != "exit" && recv(sock, rcv,sizeof(rcv), 0) != -1){
 		cout<<rcv<<endl;
 		cout<<"->";
-		cin.getline(msj,255);
+		getline(cin,getMsj);
+        strcpy(msj, getMsj.c_str());
 		send(sock, msj, sizeof(msj),0);
 	}
 	cout<<"The session has ended.";
+	if(closesocket(sock) != 0){
+		cout<<"An error has ocurred while closing the socket.";
+	}
+	else{
+		cout<<"Socket closed properly.";
+	}
 	return 0;
 }

@@ -1,5 +1,6 @@
 #pragma comment(lib, "ws32_lib")
 #include <iostream>
+#include <string>
 #include <winsock2.h>
 using namespace std;
 int main(){
@@ -23,15 +24,23 @@ int main(){
 		cout<<"There was a problem accepting the client.";
 		exit(1);
 	}
+	string getMsj;
 	char msj[255];
 	char rcv[255];
-	while(msj != "exit" && rcv != "exit"){
+	while(getMsj != "exit" && rcv != "exit"){
 		cout<<"->";
-		cin.getline(msj, 255);
+		getline(cin, getMsj);
+		strcpy(msj, getMsj.c_str());
 		send(conn, msj, sizeof(msj), 0);
 		recv(conn, rcv, sizeof(rcv), 0);
 		cout<<endl<<"Client:"<<rcv<<endl;
 	}
 	cout<<endl<<"Session finished."<<endl;
+	if(closesocket(sock) != 0|| closesocket(conn) != 0){
+		cout<<"There was an error closing the sockets.";
+	}
+	else{
+		cout<<"Sockets closed properly.";
+	}
 	return 0;
 }
